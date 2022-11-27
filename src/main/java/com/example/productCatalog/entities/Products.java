@@ -39,8 +39,8 @@ public class Products {
     private Integer quantity;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "products",cascade = CascadeType.ALL)
-    private List<ProductsOrders> productsOrders;
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    private List<ProductsOrders> orderedProducts;
 
     @JsonBackReference
     @ManyToOne

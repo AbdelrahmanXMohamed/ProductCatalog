@@ -10,11 +10,8 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductOrderDto {
-    @NotNull(message = "This field is required")
-    private Long productsId;
-
+public class OrderResponseWithQuantityDto extends OrderResponseDto {
     @Positive(message = "This field must be positive")
     @NotNull(message = "This field can't be null")
-    private Integer orderedQuantity=1;
+    private Integer quantity;
 }

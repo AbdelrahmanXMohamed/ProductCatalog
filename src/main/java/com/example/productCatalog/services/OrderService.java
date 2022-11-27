@@ -1,11 +1,10 @@
 package com.example.productCatalog.services;
 
-import com.example.productCatalog.dtos.OrderDto;
-import com.example.productCatalog.dtos.OrderReturnDto;
-
-import java.util.List;
+import com.example.productCatalog.dtos.OrderRequestDto;
+import com.example.productCatalog.dtos.OrderResponseDto;
+import com.example.productCatalog.excaptions.ProductNotFoundException;
 
 public interface OrderService {
-    OrderReturnDto buyListOfProducts(OrderDto orderDto);
-    OrderReturnDto  getOrderDetails(Long id);
+    OrderResponseDto buyProducts(OrderRequestDto orderRequestDto) throws ProductNotFoundException;
+    OrderResponseDto getOrderDetails(Long id);
 }

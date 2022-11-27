@@ -13,7 +13,7 @@ public class ProductExceptionController {
     @ExceptionHandler(value = ProductNotFoundException.class)
     public ResponseEntity<Object> exception(ProductNotFoundException exception) {
         Map<String,String> response= new HashMap<>();
-        response.put("message","Product with id:" + exception.getId()+" not found");
+        response.put("message","Product with id: " + exception.getId()+" not found");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

@@ -22,5 +22,5 @@ public class Categories {
     private String name;
     @JsonManagedReference
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-    private List<Products> products;
+    private List<Products> productItems;
 }

@@ -42,7 +42,7 @@ public class ValidationsExceptionController {
     private Map<String, String> getErrorsDetailsMap(List<String> errorsFields,List<String> errorsMessages) {
         Map<String, String> errorResponse = new HashMap<>();
         for (int i =0;i<errorsFields.size();i++)
-            errorResponse.put(errorsFields.get(i),errorsMessages.get(i));
+            errorResponse.put(errorsFields.get(i).substring(errorsFields.get(i).lastIndexOf(".")+1), errorsMessages.get(i));
         return errorResponse;
     }
 }

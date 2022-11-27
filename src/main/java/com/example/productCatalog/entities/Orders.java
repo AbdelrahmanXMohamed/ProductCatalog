@@ -23,7 +23,7 @@ public class Orders {
     @Column
     private Double totalPrice;
     @JsonManagedReference
-    @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
-    private List<ProductsOrders> productsOrders;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    private List<ProductsOrders> orderedProducts;
 
 }

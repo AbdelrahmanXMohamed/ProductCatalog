@@ -6,14 +6,16 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductWithIdDto extends ProductDto{
+public class OrderResponseDto {
     @NotNull(message = "This field is required")
-    private Long id;
+    private Long orderId;
     @Valid
-    private CategoryDto category;
+    private List<OrderedProductDto> products;
+    private Double totalPrice;
 
 }

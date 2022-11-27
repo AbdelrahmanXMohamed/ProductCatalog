@@ -1,31 +1,33 @@
-package com.example.productCatalog.services;
+package com.example.productCatalog.services.impl;
 
 import com.example.productCatalog.dtos.CategoryCreateDto;
 import com.example.productCatalog.dtos.CategoryDto;
 import com.example.productCatalog.entities.Categories;
 import com.example.productCatalog.entities.Products;
+import com.example.productCatalog.excaptions.CategoryNotFoundException;
 import com.example.productCatalog.mappers.CategoryMapper;
 import com.example.productCatalog.repositories.CategoriesRepository;
+import com.example.productCatalog.services.CategoryService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoriesRepository categoriesRepository;
     CategoryMapper categoryMapper= Mappers.getMapper(CategoryMapper.class);
     @Override
     public Categories createCategory(CategoryCreateDto categoryCreateDto){
-        if (categoriesRepository.findByName(categoryCreateDto.getName())!=null)
-            return categoriesRepository.findByName(categoryCreateDto.getName());
-
-        return categoriesRepository
-                .save(categoryMapper.categoryCreateDtoToCategories(categoryCreateDto));
+        Optional<Categories> categoriesOptional=categoriesRepository.findByName(categoryCreateDto.getName());
+        return categoriesOptional.orElseGet(() -> categoriesRepository
+                .save(categoryMapper.categoryCreateDtoToCategories(categoryCreateDto)));
     }
     @Override
     public List<CategoryDto> getAllCategories() {
@@ -36,7 +38,11 @@ public class CategoryServiceImpl implements CategoryService{
     }
     @Override
     public List<Products> getAllProductsByCategories(Long id) {
-        return categoriesRepository.findById(id).get().getProducts();
+        Optional<Categories> categoriesOptional=categoriesRepository.findById(id);
+        if (!categoriesOptional.isPresent()){
+            throw new CategoryNotFoundException(id);
+        }
+        return categoriesOptional.get().getProductItems().stream().filter(Products::getStatus).collect(Collectors.toList());
     }
 
 }

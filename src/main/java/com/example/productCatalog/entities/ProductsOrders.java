@@ -23,14 +23,13 @@ public class ProductsOrders {
     private Double price;
 
     private Double totalPrice;
-
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name="productId")
-    private Products products;
+    private Products product;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name="orderId")
-    private Orders orders;
+    private Orders order;
 
 }

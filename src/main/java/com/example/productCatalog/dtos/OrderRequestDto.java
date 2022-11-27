@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDto {
+public class OrderRequestDto {
     @Valid
-    private List<ProductOrderDto> products;
+    private List<OrderedProductRequestDto> orderItems;
 
 }

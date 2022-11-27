@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryCreateDto {
-    @NotNull(message = "This field is required")
-    @NotBlank(message = "This field can't be empty")
+    @NotBlank(message = "This field can't be empty or null")
     private String name;
 }

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class CategoryDto {
     @NotNull(message = "This field is required")
     private Long Id;
-    @NotBlank(message = "This field can't be empty")
-    @NotNull(message = "This field is required")
+    @NotBlank(message = "This field can't be empty or null")
     private String name;
 }
