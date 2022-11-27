@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Products,Long> {
+    @Query("select p  from Products p where p.status=true")
+    List<Products> findAll();
 //        List<Products> retrievingAllProductsOrderedByPopularity();
 }

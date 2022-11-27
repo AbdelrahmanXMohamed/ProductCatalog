@@ -1,6 +1,7 @@
 package com.example.productCatalog.controllers;
 
-import com.example.productCatalog.dto.CategoryCreateDto;
+import com.example.productCatalog.dtos.CategoryCreateDto;
+import com.example.productCatalog.dtos.CategoryDto;
 import com.example.productCatalog.entities.Categories;
 import com.example.productCatalog.entities.Products;
 import com.example.productCatalog.services.CategoryService;
@@ -21,7 +22,7 @@ public class CategoryController {
         return categoryService.createCategory(categoryCreateDto);
     }
     @GetMapping
-    public List<Categories> getAllCategories()
+    public List<CategoryDto> getAllCategories()
     {
         return categoryService.getAllCategories();
     }

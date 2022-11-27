@@ -1,10 +1,8 @@
 package com.example.productCatalog.services;
 
-import com.example.productCatalog.dto.ProductDto;
-import com.example.productCatalog.dto.ProductWithCategory;
-import com.example.productCatalog.dto.ProductWithIdDto;
+import com.example.productCatalog.dtos.ProductWithCategory;
+import com.example.productCatalog.dtos.ProductWithIdDto;
 import com.example.productCatalog.entities.Products;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 public interface ProductService {

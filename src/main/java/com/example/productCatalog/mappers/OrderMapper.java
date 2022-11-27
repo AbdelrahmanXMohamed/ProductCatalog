@@ -1,7 +1,7 @@
 package com.example.productCatalog.mappers;
 
-import com.example.productCatalog.dto.OrderDto;
-import com.example.productCatalog.dto.OrderReturnDto;
+import com.example.productCatalog.dtos.OrderDto;
+import com.example.productCatalog.dtos.OrderReturnDto;
 import com.example.productCatalog.entities.Orders;
 import org.mapstruct.Mapper;
 

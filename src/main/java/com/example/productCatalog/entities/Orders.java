@@ -20,6 +20,8 @@ public class Orders {
     @Column(name = "orderId")
     private Long id;
 
+    @Column
+    private Double totalPrice;
     @JsonManagedReference
     @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<ProductsOrders> productsOrders;

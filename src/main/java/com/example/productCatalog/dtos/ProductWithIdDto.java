@@ -1,17 +1,19 @@
-package com.example.productCatalog.dto;
+package com.example.productCatalog.dtos;
 
-import com.example.productCatalog.entities.Categories;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Calendar;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductWithIdDto extends ProductDto{
+    @NotNull(message = "This field is required")
     private Long id;
+    @Valid
     private CategoryDto category;
 
 }

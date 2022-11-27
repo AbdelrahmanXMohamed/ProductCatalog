@@ -1,16 +1,16 @@
-package com.example.productCatalog.dto;
+package com.example.productCatalog.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderReturnDto {
-    private Long orderId;
-    private List<ProductWithIdDto> products;
+public class OrderDto {
+    @Valid
+    private List<ProductOrderDto> products;
 
 }

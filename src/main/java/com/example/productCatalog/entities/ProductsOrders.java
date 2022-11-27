@@ -19,6 +19,11 @@ public class ProductsOrders {
     @Column(name="ProductsOrdersId")
     private Long id;
     private Integer orderedQuantity=1;
+
+    private Double price;
+
+    private Double totalPrice;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name="productId")

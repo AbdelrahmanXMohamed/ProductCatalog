@@ -27,6 +27,8 @@ public class Products {
     @Column
     private Double price;
 
+    private Boolean status=Boolean.TRUE;
+
     public Products(String nameEn, String nameAr, Double price, Integer quantity) {
         this.nameEn = nameEn;
         this.nameAr = nameAr;
