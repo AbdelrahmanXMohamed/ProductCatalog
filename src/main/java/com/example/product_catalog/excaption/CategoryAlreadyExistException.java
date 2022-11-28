@@ -1,12 +1,13 @@
 package com.example.product_catalog.excaption;
 
 import com.example.product_catalog.dto.CategoryDto;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-public class CategoryAlreadyExistException extends  RuntimeException{
+
+@Getter
+public class CategoryAlreadyExistException extends  RuntimeException {
     private static final long serialVersionUID = 1L;
-    private CategoryDto category;
+    private final CategoryDto category;
     public CategoryAlreadyExistException(CategoryDto category)
     {
         this.category=category;
