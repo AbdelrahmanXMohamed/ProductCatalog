@@ -1,4 +1,4 @@
-package com.example.product_catalog.excaption;
+package com.example.product_catalog.exception.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

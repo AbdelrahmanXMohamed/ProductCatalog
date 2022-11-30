@@ -1,5 +1,6 @@
-package com.example.product_catalog.excaption;
+package com.example.product_catalog.exception.controller;
 
+import com.example.product_catalog.exception.OrderNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

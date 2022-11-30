@@ -1,4 +1,4 @@
-package com.example.product_catalog.excaption;
+package com.example.product_catalog.exception;
 
 import com.example.product_catalog.dto.CategoryDto;
 import lombok.Getter;

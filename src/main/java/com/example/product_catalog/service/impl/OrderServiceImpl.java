@@ -4,10 +4,10 @@ import com.example.product_catalog.dto.*;
 import com.example.product_catalog.entity.Orders;
 import com.example.product_catalog.entity.Products;
 import com.example.product_catalog.entity.ProductsOrders;
-import com.example.product_catalog.excaption.OrderNotFoundException;
-import com.example.product_catalog.excaption.OrderedProductGreaterThanAvailableQuantityException;
-import com.example.product_catalog.excaption.ProductNotFoundException;
-import com.example.product_catalog.excaption.ProductOutOfStockException;
+import com.example.product_catalog.exception.OrderNotFoundException;
+import com.example.product_catalog.exception.OrderedProductGreaterThanAvailableQuantityException;
+import com.example.product_catalog.exception.ProductNotFoundException;
+import com.example.product_catalog.exception.ProductOutOfStockException;
 import com.example.product_catalog.mapper.ProductMapper;
 import com.example.product_catalog.repository.OrdersRepository;
 import com.example.product_catalog.repository.ProductsOrdersRepository;
@@ -25,7 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderServicedImpl implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     OrdersRepository ordersRepository;
     @Autowired
@@ -44,7 +44,7 @@ public class OrderServicedImpl implements OrderService {
 
         orderedProducts.forEach(orderedProduct -> orderedProduct.setOrder(ordered));
         productsOrdersRepository.saveAll(orderedProducts);
-        orderedProducts.forEach(OrderServicedImpl::orderedProductQuantity);
+        orderedProducts.forEach(OrderServiceImpl::orderedProductQuantity);
 
         orderedProducts.forEach(orderedProduct -> productsRepository.save(orderedProduct.getProduct()));
         OrderResponseDto returnDto = new OrderResponseDto();
