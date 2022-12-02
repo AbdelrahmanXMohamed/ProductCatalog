@@ -17,5 +17,7 @@ public class OrderResponseDto {
     @Valid
     private List<OrderedProductDto> products;
     private Double totalPrice;
+    private String customerName;
+    private String customerMail;
 
 }

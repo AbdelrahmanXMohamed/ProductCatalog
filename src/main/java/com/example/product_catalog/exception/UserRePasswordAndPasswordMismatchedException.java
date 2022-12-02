@@ -5,5 +5,4 @@ import lombok.Getter;
 @Getter
 public class UserRePasswordAndPasswordMismatchedException extends RuntimeException{
     private static final long serialVersionUID = 1L;
-
 }

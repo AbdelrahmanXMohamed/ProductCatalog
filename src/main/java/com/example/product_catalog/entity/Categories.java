@@ -21,6 +21,6 @@ public class Categories {
     @Column(unique = true)
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Products> productItems;
 }

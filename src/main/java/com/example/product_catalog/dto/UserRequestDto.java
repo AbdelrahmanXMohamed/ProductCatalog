@@ -2,6 +2,7 @@ package com.example.product_catalog.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -13,5 +14,6 @@ public class UserRequestDto {
     @NotBlank(message = "This re-password is required")
     private String  rePassword;
     @NotBlank(message = "This email is required")
+    @Email(message = "This email should be well-formed email address")
     private String email;
 }

@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Products,Long> {
     @Query("select p  from Products p where p.status=true")
     List<Products> findAll();
     List<Products> findByOrderByOrderedQuantityDesc();
+
 }

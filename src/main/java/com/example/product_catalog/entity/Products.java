@@ -27,10 +27,12 @@ public class Products {
     private Double price;
     private Boolean status=Boolean.TRUE;
     private Integer orderedQuantity=0;
+    private Integer orderedLimit;
+    private String image="https://via.placeholder.com/300";
     @Column
     private Integer quantity;
     @JsonManagedReference
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product" ,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ProductsOrders> orderedProducts;
     @JsonBackReference
     @ManyToOne

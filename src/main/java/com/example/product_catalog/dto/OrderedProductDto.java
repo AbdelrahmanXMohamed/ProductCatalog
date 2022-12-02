@@ -12,7 +12,8 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderedProductDto {
+public class
+OrderedProductDto {
     @NotNull(message = "This field can't be null")
     private Long id;
     @NotBlank(message = "This field can't be empty or null")

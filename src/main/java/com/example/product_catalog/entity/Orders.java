@@ -1,4 +1,5 @@
 package com.example.product_catalog.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,9 @@ public class Orders {
     @Column
     private Double totalPrice;
     @JsonManagedReference
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     private List<ProductsOrders> orderedProducts;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Users user;
 }

@@ -13,10 +13,21 @@ import com.example.product_catalog.repository.ProductsRepository;
 import com.example.product_catalog.service.ProductService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +52,14 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public Products addProduct(ProductWithCategory productDto){
+
         Categories categories = categoriesRepository.getReferenceById(productDto.getCategoryId());
+        try {
+            productDto.setImage(imageBase64ToURL(productDto.getImage()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(productDto.getImage());
         Products product=productsRepository.save(productMapper.productDtoToProducts(productDto));
         categories.getProductItems().add(product);
         product.setCategory(categories);
@@ -78,4 +96,35 @@ public class ProductServiceImpl implements ProductService {
                         .filter(Products::getStatus)
                         .map(productMapper::productsToProductWithIdDto)
                         .collect(Collectors.toList());}
+    private String imageBase64ToURL(String imageBase64) throws IOException {
+
+        String delims="[,]";
+        String[] parts = imageBase64.split(delims);
+        String imageString = parts[1];
+        BufferedImage image = null;
+
+        byte[] imageByteArray = Base64.decode(imageString.getBytes());
+        InputStream is = new ByteArrayInputStream(imageByteArray);
+        image = ImageIO.read(is);
+        is.close();
+
+        String fileExtension = null;
+        String delimiter="[/]";
+        String[] tokens = extractMimeType(imageBase64).split(delimiter);
+        fileExtension = tokens[1];
+
+        Date currentDate= new Date();
+        String imageName= String.valueOf(currentDate.getTime())+"."+fileExtension;
+        File imageFile= new File("src/main/java/com/example/product_catalog/images/"+imageName);
+        ImageIO.write(image, fileExtension, imageFile);
+
+        return imageFile.getAbsolutePath();
+    }
+    private static String extractMimeType(final String encoded) {
+        final Pattern mime = Pattern.compile("^data:([a-zA-Z0-9]+/[a-zA-Z0-9]+).*,.*");
+        final Matcher matcher = mime.matcher(encoded);
+        if (!matcher.find())
+            return "";
+        return matcher.group(1).toLowerCase();
+    }
 }

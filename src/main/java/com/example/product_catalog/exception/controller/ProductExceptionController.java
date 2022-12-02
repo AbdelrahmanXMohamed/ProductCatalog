@@ -20,7 +20,7 @@ public class ProductExceptionController {
         return response;
     }
     @ExceptionHandler(value = ProductOutOfStockException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String ,String> productOutOfStock(ProductOutOfStockException ex)
     {
         Map<String,String> response= new HashMap<>();
