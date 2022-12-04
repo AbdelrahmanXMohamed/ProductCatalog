@@ -25,7 +25,7 @@ public class ProductDto {
     @NotNull(message = "This field is required")
     private Integer quantity;
 
-    private String image="https://via.placeholder.com/300";
+    private String image;
 
     @Positive(message = "This field can't be zero or negative")
     @NotNull(message = "This field is required")

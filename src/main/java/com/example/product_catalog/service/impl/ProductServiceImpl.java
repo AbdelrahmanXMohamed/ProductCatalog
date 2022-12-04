@@ -77,6 +77,10 @@ public class ProductServiceImpl implements ProductService {
         if (!categoryOptional.isPresent()) {
             throw new CategoryNotFoundException(productDto.getCategoryId());
         }
+        if (productDto.getImage()==null || productDto.getImage().isEmpty())
+        {
+            productDto.setImage(productOptional.get().getImage());
+        }
         Products product = productMapper.productDtoToProducts(productDto);
         product.setId(id);
         categoryOptional.ifPresent(product::setCategory);

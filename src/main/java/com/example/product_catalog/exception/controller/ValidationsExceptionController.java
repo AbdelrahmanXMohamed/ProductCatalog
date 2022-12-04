@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -15,34 +16,23 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ValidationsExceptionController {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public Map<String,Object> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        errors.put("message","Wrong data provided");
 
-        return new ResponseEntity<>(
-                getErrorsMap(ex.getBindingResult().getFieldErrors()
-                        .stream()
-                        .map(FieldError::getField)
-                        .collect(Collectors.toList()),
-                        ex.getBindingResult()
-                        .getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.toList())
-                ),
-                new HttpHeaders(),
-                HttpStatus.BAD_REQUEST);
+        Map <String,String> field=new HashMap<>();
+        ex.getBindingResult()
+                .getAllErrors().forEach((error) -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String errorMessage = error.getDefaultMessage();
+                    field.put(fieldName, errorMessage);
+                });
+        errors.put("errors",field);
+        return errors;
     }
 
-    private Map<String, Object> getErrorsMap(List<String> errorsFields,List<String> errorsMessages) {
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("message", "Wrong data provided");
-        errorResponse.put("errors", getErrorsDetailsMap(errorsFields,errorsMessages));
-        return errorResponse;
-    }
-    private Map<String, String> getErrorsDetailsMap(List<String> errorsFields,List<String> errorsMessages) {
-        Map<String, String> errorResponse = new HashMap<>();
-        for (int i =0;i<errorsFields.size();i++)
-            errorResponse.put(errorsFields.get(i).substring(errorsFields.get(i).lastIndexOf(".")+1), errorsMessages.get(i));
-        return errorResponse;
-    }
 }
