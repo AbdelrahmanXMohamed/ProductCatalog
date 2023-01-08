@@ -8,11 +8,13 @@ import com.example.product_catalog.exception.CategoryAlreadyExistException;
 import com.example.product_catalog.exception.CategoryNotFoundException;
 import com.example.product_catalog.mapper.CategoryMapper;
 import com.example.product_catalog.repository.CategoriesRepository;
+import com.example.product_catalog.repository.ProductsRepository;
 import com.example.product_catalog.service.CategoryService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoriesRepository categoriesRepository;
+    @Autowired
+    ProductsRepository productsRepository;
     CategoryMapper categoryMapper= Mappers.getMapper(CategoryMapper.class);
     @Override
     public Categories createCategory(CategoryCreateDto categoryCreateDto){
@@ -42,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (!categoriesOptional.isPresent()){
             throw new CategoryNotFoundException(id);
         }
-        return categoriesOptional.get().getProductItems().stream().filter(Products::getStatus).collect(Collectors.toList());
+        return this.productsRepository.findAllByCategory(categoriesOptional.get()).stream().filter(Products::getStatus).collect(Collectors.toList());
     }
 
 }

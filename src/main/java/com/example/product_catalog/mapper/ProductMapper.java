@@ -14,4 +14,6 @@ public interface ProductMapper {
     ProductResponseDto productsToProductWithIdDto(Products products);
     OrderedProductDto productsToOrderedProductDto(Products products);
     Products productWithCategoryDtoToProducts(ProductWithCategory productWithCategory);
+    ProductResponseDto productsToProductResponseDto(Products products);
+
 }

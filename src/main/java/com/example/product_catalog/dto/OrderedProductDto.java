@@ -29,4 +29,5 @@ OrderedProductDto {
     @Positive(message = "This field must be positive")
     @NotNull(message = "This field can't be null")
     private Double totalPrice;
+    private String image;
 }

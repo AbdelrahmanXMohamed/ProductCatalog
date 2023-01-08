@@ -22,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -59,14 +58,13 @@ public class ProductServiceImpl implements ProductService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(productDto.getImage());
         Products product=productsRepository.save(productMapper.productDtoToProducts(productDto));
         categories.getProductItems().add(product);
         product.setCategory(categories);
         return productsRepository.save(product);
     }
     @Override
-    public Products updateProducts(Long id,ProductWithCategory productDto){
+    public Products updateProducts(Long id,ProductWithCategory productDto) throws IOException {
         Optional<Products> productOptional =
                 productsRepository.findById(id);
         if (!productOptional.isPresent()) {
@@ -80,6 +78,10 @@ public class ProductServiceImpl implements ProductService {
         if (productDto.getImage()==null || productDto.getImage().isEmpty())
         {
             productDto.setImage(productOptional.get().getImage());
+        }
+        else {
+            productDto.setImage(imageBase64ToURL(productDto.getImage()));
+
         }
         Products product = productMapper.productDtoToProducts(productDto);
         product.setId(id);
@@ -100,6 +102,11 @@ public class ProductServiceImpl implements ProductService {
                         .filter(Products::getStatus)
                         .map(productMapper::productsToProductWithIdDto)
                         .collect(Collectors.toList());}
+    @Override
+    public ProductResponseDto getProductsById(Long id) {
+        return productMapper.productsToProductResponseDto(productsRepository.findById(id).orElseThrow(()-> new RuntimeException()));
+    }
+
     private String imageBase64ToURL(String imageBase64) throws IOException {
 
         String delims="[,]";
@@ -119,10 +126,10 @@ public class ProductServiceImpl implements ProductService {
 
         Date currentDate= new Date();
         String imageName= String.valueOf(currentDate.getTime())+"."+fileExtension;
-        File imageFile= new File("src/main/java/com/example/product_catalog/images/"+imageName);
+        File imageFile= new File("src/main/resources/static/images/"+imageName);
         ImageIO.write(image, fileExtension, imageFile);
 
-        return imageFile.getAbsolutePath();
+        return "http://localhost:8080/images/"+imageName;
     }
     private static String extractMimeType(final String encoded) {
         final Pattern mime = Pattern.compile("^data:([a-zA-Z0-9]+/[a-zA-Z0-9]+).*,.*");
